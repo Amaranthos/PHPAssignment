@@ -1,0 +1,24 @@
+* {
+	font-family: sans-serif;
+}
+
+body {
+	background-color: #193549;
+	color: #FFFFFF;
+}
+
+.yellow {
+	color: #ffc600;	
+}
+
+.orange {
+	color: #f2992e;
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
