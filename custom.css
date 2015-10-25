@@ -3,22 +3,73 @@
 }
 
 body {
-	background-color: #193549;
+	background-color: #526685;
 	color: #FFFFFF;
 }
 
-.yellow {
-	color: #ffc600;	
+.jumbotron {
+	background-color: #193549;
 }
 
-.orange {
+form button {
+	/*padding-top:10px;*/
+	background-color:transparent;
+	border-radius: 6px;
+	/*border:none;*/
+	font-size:18px;
+	/*float:right;*/
+	color:#ffc600;
+}
+
+.navbar-inverse {
+	background-image: none !important;
+	background-color: #15232D;
+}
+
+.navbar-inverse .navbar-brand {
 	color: #f2992e;
 }
 
+.navbar-inverse .navbar-nav>li>a{
+	color: #ffc600;
+}
+
+.navbar-inverse .navbar-toggle {
+	color: #ffc600;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar{
+	color: #f2992e;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+	color: #ffc600;
+}
+
+.dropdown-menu {
+	background-color: #15232D;
+	color: #ffc600;
+}
+
+.content {
+	background-color: #193549;
+	border-radius: 6px;
+	padding: 30px 60px;
+	margin: 10px 0;
+}
+
+.yellow {
+	color: #ffc600 !important;
+}
+
+.orange {
+	color: #f2992e !important;
+}
+
 .red {
-	color: red;
+	color: red !important;
 }
 
 .green {
-	color: green;
+	color: green !important;
 }

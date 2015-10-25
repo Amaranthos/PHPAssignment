@@ -1,3 +1,7 @@
+<?php
+	include "catalogue.php";
+?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -15,21 +19,11 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle", data-toggle="dropdown" role="button" aria-expanded="false">Genre<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li>
-							<a href="/games/">Action</a>
-						</li>
-						<li>
-							<a href="/apps/">Adventure</a>
-						</li>
-						<li>
-							<a href="/tools/">Casual</a>
-						</li>
-						<li>
-							<a href="/libraries/">Racing</a>
-						</li>
-						<li>
-							<a href="/web/">Strategy</a>
-						</li>
+						<?php foreach ($categories as $key => $value): ?>
+							<li>
+								<a href="/<?=$key?>/"><?=$value->name?></a>
+							</li>
+						<?php endforeach ?>
 					</ul>
 				</li>
 				<li>
