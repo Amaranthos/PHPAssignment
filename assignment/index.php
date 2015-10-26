@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
-		<?php include "css.php"; ?>
+		<title>Buy Games</title>
+		<?php require "css.php"; ?>
 	</head>
 	<body>
-		<?php include "navbar.php"; ?>
+		<?php require "navbar.php"; ?>
 		<div class="container" style="padding-top: 78px;">
 			<div class="jumbotron">
 				<div class="row">
@@ -28,6 +28,6 @@
 	<body>
 
 
-		<?php include "js.php"; ?>
+		<?php require "js.php"; ?>
 	</body>
 </html>

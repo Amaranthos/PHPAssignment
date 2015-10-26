@@ -21,6 +21,14 @@ form button {
 	color:#ffc600;
 }
 
+th {
+	/*text-align: center;*/
+}
+
+.table>tbody>tr>td {
+	vertical-align: middle;
+}
+
 .navbar-inverse {
 	background-image: none !important;
 	background-color: #15232D;

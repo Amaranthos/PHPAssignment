@@ -21,6 +21,16 @@
 		}	
 	}
 
+	class Cart {
+		public $product;
+		public $quantity;
+
+		public function __construct($product, $quantity){
+			$this->product =  $product;
+			$this->quantity = $quantity;
+		}
+	}
+
 	$categories["action"] = new Category("Action");
 	$categories["adventure"] = new Category("Adventure");
 	$categories["casual"] = new Category("Casual");
@@ -32,3 +42,5 @@
 	$catalogue[] = new Product("Flappy Flock", 2.99, "Have you had your fix today?", $categories["casual"]);
 	$catalogue[] = new Product("Yes You Are Stupid Puzzles", 29.99, "You'll never solve these puzzles!", $categories["puzzle"]);
 	$catalogue[] = new Product("Streamlined RTS", 59.99, "Who even liked AOE anyway?", $categories["strategy"]);
+
+	$cart = array();

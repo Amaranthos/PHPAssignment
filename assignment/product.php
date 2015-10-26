@@ -1,18 +1,15 @@
 <?php
-	// include "catalogue.php";
-
 	$productIndex = isset($_GET["product"])?(int)$_GET["product"]:null;
-
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<title></title>
-		<?php include "css.php"; ?>
+		<?php require "css.php"; ?>
 	</head>
 	<body>
-		<?php include "navbar.php"; ?>
+		<?php require "navbar.php"; ?>
 		<div class="container" style="padding-top: 78px;">
 			<?php if($productIndex >= 0 && $productIndex < count($catalogue)):?>
 				<div class="jumbotron" style="padding: 30px 60px; margin-bottom:5px;">
@@ -46,6 +43,6 @@
 	<body>
 
 
-		<?php include "js.php"; ?>
+		<?php require "js.php"; ?>
 	</body>
 </html>

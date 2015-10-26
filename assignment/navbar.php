@@ -1,8 +1,8 @@
 <?php
-	include "catalogue.php";
+	require "catalogue.php";
 ?>
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -16,8 +16,11 @@
 
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right" id ="boldText">
+				<li>
+					<a href="/assignment/">Home</a>
+				</li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle", data-toggle="dropdown" role="button" aria-expanded="false">Genre<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genre<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<?php foreach ($categories as $key => $value): ?>
 							<li>
