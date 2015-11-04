@@ -1,0 +1,159 @@
+* {
+	font-family: sans-serif;
+}
+
+body {
+	background-color: #1b1b1b;
+	color: #FFFFFF;
+	opacity: 0.9;
+}
+
+.jumbotron {
+	background-color: #313131;
+}
+
+form button {
+	/*padding-top:10px;*/
+	background-color:transparent;
+	border-radius: 6px;
+	/*border:none;*/
+	font-size:18px;
+	/*float:right;*/
+	color:#FFFFFF;
+}
+
+th {
+	/*text-align: center;*/
+}
+.thumbnail {
+	background-color: #1b1b1b;
+}
+
+.button {
+	display: inline-block;
+	padding:6px 12px;
+	margin-bottom:0;
+	font-weight:400;
+	line-height:1.42857143;
+	text-align:center;
+	white-space:nowrap;
+	vertical-align:middle;
+	-ms-touch-action:manipulation;
+	touch-action:manipulation;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	background-image:none;
+	border:1px solid transparent;
+	background-color: #1b1b1b;
+	border-radius: 6px;
+	font-size:18px;
+	color:#FFFFFF;
+	cursor: pointer;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+span:hover {
+	color: #64B5F6;
+}
+
+.button-block{
+	display:block;
+	width: 100%;
+}
+
+.button:active{
+	background-image:none;
+	outline:0;
+	-webkit-box-shadow:inset 0 3px 5px rgba(0, 0, 0, .125);
+	box-shadow:inset 0 3px 5px rgba(0, 0, 0, .125);
+	color: #FFFFFF;
+}
+
+a {
+	color: #FFFFFF;
+}
+
+a:hover {
+	color: #64B5F6;
+	text-decoration: none;
+}
+
+button:hover {
+	color: #64B5F6;
+}
+
+.table>tbody>tr>td {
+	vertical-align: middle;
+}
+
+.dropdown-menu>li>a:hover{
+	background-color: #64B5F6;
+}
+
+.navbar-inverse {
+	background-image: none !important;
+	background-color: #121212 ;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+	color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-toggle {
+	color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar{
+	color: #64B5F6;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a:first-letter{
+	color: #64B5F6;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover:first-letter{
+	color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+	color: #FFFFFF;
+}
+
+.dropdown-menu {
+	background-color: #121212;
+	color: #FFFFFF;
+}
+
+.content {
+	background-color: #313131;
+	border-radius: 6px;
+	padding: 30px 60px;
+	margin: 10px 0;
+}
+
+.yellow {
+	color: #ffc600 !important;
+}
+
+.orange {
+	color: #f2992e !important;
+}
+
+.red {
+	color: red !important;
+}
+
+.green {
+	color: green !important;
+}
+
+.blue {
+	color: #64B5F6 !important;
+}
