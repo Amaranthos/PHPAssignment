@@ -21,6 +21,7 @@
 
 		if(!ValidateEmail($details["email"])){
 			$error.=" Email is not valid, please enter a valid email.";
+			$detailsChecked = false;
 		}
 	}
 
@@ -31,53 +32,66 @@
 
 		if(!ValidateNumbers($details["contactNumber"])){
 			$error.=" Contact number is not valid, valid contact numbers should contain only numerals.";
+			$detailsChecked = false;
 		}
 	}
 
-	if(isset($details["cardNumber"])){
+	if(isset($details["cardNumber"]) && $details["cardNumber"] != ""){
 		$details["cardNumber"] = RemoveExtraChars($details["cardNumber"]);
 
 		$match = "";
+		if(isset($details["cardType"])){
+			switch ($details["cardType"]) {
+			case 'mc':
+				$match = "/^5[1-5][0-9]{14}$/";
+				if(!preg_match($match, $details["cardNumber"]) && !LuhnCheckSum($details["cardNumber"])){
+					$error.=" Card number is not valid for MasterCard.";
+					$detailsChecked = false;
+				}
+				break;
+			
+			case 'v':
+				$match = "/^4[0-9]{12}(?:[0-9]{3})?$/";
+				if(!preg_match($match, $details["cardNumber"]) && !LuhnCheckSum($details["cardNumber"])){
+					$error.=" Card number is not valid for Visa.";
+					$detailsChecked = false;
+				}
+				break;
 
-		switch ($details["cardType"]) {
-		case 'mc':
-			$match = "/^5[1-5][0-9]{14}$/";
-			if(!preg_match($match, $details["cardNumber"])){
-				$error.=" Card number is not valid for MasterCard.";
-			}
-			break;
-		
-		case 'v':
-			$match = "/^4[0-9]{12}(?:[0-9]{3})?$/";
-			if(!preg_match($match, $details["cardNumber"])){
-				$error.=" Card number is not valid for Visa.";
-			}
-			break;
+			case 'a':
+				$match = "/^3[47][0-9]{13}$/";
+				if(!preg_match($match, $details["cardNumber"]) && !LuhnCheckSum($details["cardNumber"])){
+					$error.=" Card number is not valid for AMEX.";
+					$detailsChecked = false;
+				}
+				break;
 
-		case 'a':
-			$match = "/^3[47][0-9]{13}$/";
-			if(!preg_match($match, $details["cardNumber"])){
-				$error.=" Card number is not valid for AMEX.";
+			default:
+				$error.=" Card Type is not valid, please select a valid card.";
+				$detailsChecked = false;
+				break;
 			}
-			break;
-
-		default:
+		}
+		else {
 			$error.=" Card Type is not valid, please select a valid card.";
-			break;
+			$detailsChecked = false;
 		}
-
-		if($match != ""){
-			if(!LuhnCheckSum($details["cardNumber"])){
-				$error.=" Card number is not a valid card number, please re-enter your card number.";
-			}
-		}
-	}	
+	}
+	else {
+		$error.=" A card number has not been enetered, please enter a valid card number.";
+		$detailsChecked = false;
+	}
 
 	if(isset($details["cardExpiry"])){
 		if(date("Y-m") > $details["cardExpiry"]){
-			$error.=" Card has expired, please enter a new expiry date.";
+			$error.=" Card has expired, please enter a non-expired date.";
+			$detailsChecked = false;
 		}
-	}	
+	}
+	else {
+		$error.=" Card expiry not a valid date, please select a valid date.";
+		$detailsChecked = false;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -94,40 +108,40 @@
 				<?php if(!$detailsChecked):?>
 				<div class="row">
 					<div class="col-md-6">
-						<form class="form-horizontal" method="post" action="#">
+						<form class="form-horizontal" method="post" action="">
 							<div class="form-group">
 								<label for="firstname" class="col-sm-4">First Name:</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="firstname" id="firstname" value="<?php echo isset($details["firstname"])? $details["firstname"]:"First Name";?>" requried/>
+									<input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="surname" class="col-sm-4">Last Name:</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="surname" id="surname" value="<?php echo isset($details["surname"])? $details["surname"]:"Last Name";?>"requried/>
+									<input type="text" class="form-control" name="surname" id="surname" placeholder="Last Name">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="email" class="col-sm-4">Email:</label>
 								<div class="col-sm-8">
-									<input type="email" class="form-control" name="email" id="email" value="<?php echo isset($details["email"])? $details["email"]:"email@example.com";?>"requried/>
+									<input type="email" class="form-control" name="email" id="email" placeholder="example@email.com">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="address" class="col-sm-4">Address:</label>
 								<div class="col-sm-8">
-									<textarea type="text" rows="3" class="form-control" name="address" id="address"><?php echo isset($details["address"])? $details["address"]:"Address";?></textarea>
+									<textarea rows="3" class="form-control" name="address" id="address" placeholder="Address"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="contactNumber" class="col-sm-4">Contact Number:</label>
 								<div class="col-sm-8">
-									<input type="tel" class="form-control" name="contactNumber" id="contactNumber" value="<?php echo isset($details["contactNumber"])? $details["contactNumber"]:"Phone";?>"requried/>
+									<input type="tel" class="form-control" name="contactNumber" id="contactNumber" placeholder="Contact Number">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="cardType" class="col-sm-4">Card Type:</label>
+								<label class="col-sm-4">Card Type:</label>
 								<div class="col-sm-8">
 									<label for="cardType0" class="radio-inline">
 										<input type="radio" name="cardType" id="cardType0" value="mc">MasterCard
@@ -144,13 +158,13 @@
 							<div class="form-group">
 								<label for="cardNumber" class="col-sm-4">Card Number:</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="cardNumber" id="cardNumber" value="<?php echo isset($details["cardNumber"])? $details["cardNumber"]:"Card Number";?>"requried/>
+									<input type="text" class="form-control" name="cardNumber" id="cardNumber" placeholder="Card Number">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="cardExpiry" class="col-sm-4">Card Expiry Date:</label>
 								<div class="col-sm-8">
-									<input type="month" class="form-control" name="cardExpiry" id="cardExpiry" value="<?php echo isset($details["cardExpiry"])? $details["cardExpiry"]:"";?>"requried/>
+									<input type="month" class="form-control" name="cardExpiry" id="cardExpiry">
 								</div>
 							</div>							
 							<div class="form-group">
@@ -172,11 +186,10 @@
 					</div>
 				</div>
 				<?php else: ?>
-					<?php foreach ($details as $key => $value):?>
-						<?=$key?>
-						<?=$value?>
-						<br/>
-					<?php endforeach ?>					
+
+					<p>Order successfully placed for <?=$details["firstname"]." ".$details["surname"]?>.</p>
+					<p>Delivery to <?=$details["address"]?></p>
+					<p>Card: <?=$details["cardNumber"]?> charged $<?=$_SESSION["costTotal"]?> </p>
 				<?php endif ?>
 			</div>
 		</div>
