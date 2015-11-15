@@ -11,13 +11,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/PHPAssignment/src/"><span class="blue">B</span>uy <span class="blue">G</span>ames</a>
+			<a class="navbar-brand" href="./"><span class="blue">B</span>uy <span class="blue">G</span>ames</a>
 		</div>
 
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right" id ="boldText">
 				<li>
-					<a href="/PHPAssignment/src/"><strong><span class="blue">H</span>ome</strong></a>
+					<a href="./"><strong><span class="blue">H</span>ome</strong></a>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong><span class="blue">G</span>enre<span class="caret"></span></strong></a>

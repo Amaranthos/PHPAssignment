@@ -1,6 +1,11 @@
 <?php
 	require_once "catalogue.php";
-	
+
+	//Reset visiting checkout
+	if(!isset($_SESSION["checkoutVisit"])){
+		$_SESSION["checkoutVisit"] = false;
+	}
+
 	$productIndex = isset($_GET["product"])?(int)$_GET["product"]:null;
 
 

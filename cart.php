@@ -1,19 +1,26 @@
 <?php
 	require_once "catalogue.php";
 
+	//Reset visiting checkout
+	if(!isset($_SESSION["checkoutVisit"])){
+		$_SESSION["checkoutVisit"] = false;
+	}
+
 	if(isset($_POST["product"]) && $_POST["product"] != ""){
 		$item = (int)$_POST["product"];
 		if($item >= 0){
 			$_SESSION["cart"][$catalogue[$item]->name] = new Cart($catalogue[$item], 1);
 		}
 	}
-	else{
+	else if(isset($_SESSION["cart"])){
 		foreach ($_SESSION["cart"] as $key => $value){
 			if(isset($_SESSION["cart"][$key])){
 				$_SESSION["cart"][$key]->quantity = (int)$_POST["quantity"][$key];
 
-				if((int)$_POST["quantity"][$key] <= 0 || (int)$_SESSION["cart"][$key]->quantity <= 0){
-					unset($_SESSION["cart"][$key]);
+				if(isset($_POST["quantity"])){
+					if((int)$_POST["quantity"][$key] <= 0 || (int)$_SESSION["cart"][$key]->quantity <= 0){
+						unset($_SESSION["cart"][$key]);
+					}
 				}
 			}
 		}
@@ -30,9 +37,15 @@
 		<?php require_once "navbar.php"; ?>
 		<div class="container" style="padding-top: 78px;">
 			<div class="jumbotron" style="margin-bottom:5px;">
-				<h1>Cart <small> <?php echo (count($_SESSION["cart"]).((count($_SESSION["cart"]) !== 1)?" Items":" Item"));?></small></h1>
+				<h1>Cart <small> 
+					<?php 
+						if(isset($_SESSION["cart"])){ 
+							echo (count($_SESSION["cart"]).(count($_SESSION["cart"]) !== 1?" Items":" Item"));
+						}
+					?>
+				</small></h1>
 			</div>
-				<?php if(count($_SESSION["cart"]) > 0): ?>
+				<?php if(isset($_SESSION["cart"]) && count($_SESSION["cart"]) > 0): ?>
 					<form method="POST">
 						<div class="row-fluid">
 							<div class="content">
@@ -56,7 +69,7 @@
 												?>
 													<tr>
 													<td>
-														<img src="../img/placeholder.jpg" width="80" height="80" class="img-responsive img-thumbnail" alt="Product Image">
+														<img src="./img/placeholder.jpg" width="80" height="80" class="img-responsive img-thumbnail" alt="Product Image">
 													</td>
 													<td>
 														<label class="h4"><?=$value->product->name?></label>													

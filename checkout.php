@@ -1,4 +1,8 @@
 <?php
+	if(!isset($_SESSION["costTotal"])){
+		header("index.php");
+	}
+
 	require_once "catalogue.php";
 
 	$detailsChecked = true;
@@ -78,7 +82,7 @@
 		}
 	}
 	else {
-		$error.=" A card number has not been enetered, please enter a valid card number.";
+		$error.=" A card number has not been entered, please enter a valid card number.";
 		$detailsChecked = false;
 	}
 
@@ -91,6 +95,12 @@
 	else {
 		$error.=" Card expiry not a valid date, please select a valid date.";
 		$detailsChecked = false;
+	}
+
+	//Don't error for first visit
+	if(!isset($_SESSION["checkoutVisit"]) || $_SESSION["checkoutVisit"] == false){
+		$error = "";
+		$_SESSION["checkoutVisit"] = true;
 	}
 ?>
 
