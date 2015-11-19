@@ -18,6 +18,17 @@
 		require_once "sql.php";
 	}
 
+	// Query SQL functions
+	function Query($conn, $query) {
+		if($conn->query($query) !== true){
+			die("Error: ".$conn->error);
+		}		
+	}
+
+	function Prepare($conn, $statement, ...$params){
+
+	}
+
 	// Validate data functions
 	function RemoveExtraChars($string) {
 		return str_replace(" ", "", str_replace("-", "", htmlspecialchars(stripslashes(trim($string)))));
@@ -48,25 +59,13 @@
 		}
 	}
 
-	class Product {
-		public $name;
-		public $price;
-		public $description;
-		public $category;
-
-		public function __construct($name, $price, $description, $category){
-			$this->name = $name;
-			$this->price = $price;
-			$this->description = $description;
-			$this->category = $category;
-		}	
-	}
-
 	class Cart {
+		public $id;
 		public $product;
 		public $quantity;
 
-		public function __construct($product, $quantity){
+		public function __construct($id, $product, $quantity){
+			$this->id = $id;
 			$this->product =  $product;
 			$this->quantity = $quantity;
 		}
@@ -78,11 +77,4 @@
 	$categories["puzzle"] = new Category("Puzzle");
 	$categories["strategy"] = new Category("Strategy");
 
-	$catalogue[] = new Product("Generic Shooter", 29.99, "A shooter where you shoot things!", $categories["action"]);
-	$catalogue[] = new Product("Epic Quest", 79.99, "Running sim, where you endless grind for levels, upgrading meaningless skills!", $categories["adventure"]);
-	$catalogue[] = new Product("Flappy Flock", 2.99, "Have you had your fix today?", $categories["casual"]);
-	$catalogue[] = new Product("Stupid Puzzles", 29.99, "You'll never solve these puzzles!", $categories["puzzle"]);
-	$catalogue[] = new Product("Streamlined RTS", 59.99, "Who even liked AOE anyway?", $categories["strategy"]);
-
-	$conn->close();
-
+	

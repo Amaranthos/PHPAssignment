@@ -55,10 +55,6 @@ th {
 	-webkit-box-sizing: border-box;
 }
 
-span:hover {
-	color: #64B5F6;
-}
-
 .button-block{
 	display:block;
 	width: 100%;

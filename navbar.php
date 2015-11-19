@@ -1,5 +1,5 @@
 <?php
-	require_once "catalogue.php";
+	
 ?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -18,17 +18,6 @@
 			<ul class="nav navbar-nav navbar-right" id ="boldText">
 				<li>
 					<a href="./"><strong><span class="blue">H</span>ome</strong></a>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong><span class="blue">G</span>enre<span class="caret"></span></strong></a>
-					<ul class="dropdown-menu" role="menu">
-						<?php foreach ($categories as $key => $value): ?>
-							<li>
-								<!-- /<?=$key?>/ -->
-								<a href="#"><strong><?=$value->name?></strong></a>
-							</li>
-						<?php endforeach ?>
-					</ul>
 				</li>
 				<li>
 					<a href="cart.php"><strong><i class="fa fa-shopping-cart blue"></i></strong></a>
