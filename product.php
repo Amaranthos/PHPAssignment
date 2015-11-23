@@ -91,7 +91,7 @@
 								<div class="col-md-12">
 									<div class="content">
 										<div class="form-group">
-											<h4><strong><?=$value["email"]?></strong></h4>
+											<h4><a href="mailto:<?=$value["email"]?>"><strong><?=$value["email"]?></strong></a></h4>
 											<q><?=$value["comment"]?></q>
 										</div>
 									</div>

@@ -19,15 +19,9 @@
 	}
 
 	// Query SQL functions
-	function Query($conn, $query) {
-		if($conn->query($query) !== true){
-			die("Error: ".$conn->error);
-		}		
-	}
-
-	function Prepare($conn, $statement, ...$params){
-
-	}
+	// function Query($conn, $query) {
+		
+	// }
 
 	// Validate data functions
 	function RemoveExtraChars($string) {

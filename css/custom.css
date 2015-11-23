@@ -12,6 +12,8 @@ body {
 	background-color: #313131;
 }
 
+@media screen 
+
 form button {
 	/*padding-top:10px;*/
 	background-color:transparent;
@@ -27,6 +29,9 @@ th {
 }
 .thumbnail {
 	background-color: #1b1b1b;
+	margin-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .button {

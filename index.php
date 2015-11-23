@@ -25,7 +25,13 @@
 				<div class="row">
 					<?php
 						$query = "SELECT id, name, thumbnail FROM products";
-						$result = $conn->query($query);
+
+						if ($result = $conn->query($query)){
+
+						}
+						else {
+							die("Error: ".$conn->error);
+						}	
 
 						if($result->num_rows > 0):
 							while($row = $result->fetch_assoc()):?>
