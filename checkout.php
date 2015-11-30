@@ -8,7 +8,7 @@
 	$detailsChecked = true;
 	$error = "";
 
-	$params = ["firstname", "surname", "email", "address", "contactNumber", "cardType", "cardNumber", "cardExpiry"];
+	$params = ["firstname", "surname", "email", "address", "contactNumber", "cardNumber", "cardExpiry"];
 	$details = array();
 
 	foreach ($params as $param) {
@@ -20,6 +20,7 @@
 		}
 	}
 
+	// Validate email
 	if(isset($details["email"])){
 		$details["email"] = RemoveExtraChars($details["email"]);
 
@@ -29,6 +30,7 @@
 		}
 	}
 
+	// Validate phone number
 	if(isset($details["contactNumber"])){
 		$details["contactNumber"] = RemoveExtraChars($details["contactNumber"]);
 
@@ -40,45 +42,18 @@
 		}
 	}
 
+	// Validate credit card number
 	if(isset($details["cardNumber"]) && $details["cardNumber"] != ""){
 		$details["cardNumber"] = RemoveExtraChars($details["cardNumber"]);
 
-		$match = "";
-		if(isset($details["cardType"])){
-			switch ($details["cardType"]) {
-			case 'mc':
-				$match = "/^5[1-5][0-9]{14}$/";
-				if(!preg_match($match, $details["cardNumber"]) && !LuhnCheckSum($details["cardNumber"])){
-					$error.=" Card number is not valid for MasterCard.";
-					$detailsChecked = false;
-				}
-				break;
-			
-			case 'v':
-				$match = "/^4[0-9]{12}(?:[0-9]{3})?$/";
-				if(!preg_match($match, $details["cardNumber"]) && !LuhnCheckSum($details["cardNumber"])){
-					$error.=" Card number is not valid for Visa.";
-					$detailsChecked = false;
-				}
-				break;
+		$check = ValidateCard($details["cardNumber"]);
 
-			case 'a':
-				$match = "/^3[47][0-9]{13}$/";
-				if(!preg_match($match, $details["cardNumber"]) && !LuhnCheckSum($details["cardNumber"])){
-					$error.=" Card number is not valid for AMEX.";
-					$detailsChecked = false;
-				}
-				break;
-
-			default:
-				$error.=" Card Type is not valid, please select a valid card.";
-				$detailsChecked = false;
-				break;
-			}
+		if($check !== false){
+			$details["cardType"] = $check;
 		}
 		else {
-			$error.=" Card Type is not valid, please select a valid card.";
 			$detailsChecked = false;
+			$error.=" Card number is not valid.";
 		}
 	}
 	else {
@@ -86,6 +61,7 @@
 		$detailsChecked = false;
 	}
 
+	//Validat credit card date
 	if(isset($details["cardExpiry"])){
 		if(date("Y-m") > $details["cardExpiry"]){
 			$error.=" Card has expired, please enter a non-expired date.";
@@ -101,6 +77,11 @@
 	if(!isset($_SESSION["checkoutVisit"]) || $_SESSION["checkoutVisit"] == false){
 		$error = "";
 		$_SESSION["checkoutVisit"] = true;
+	}
+
+	// Save customer details
+	if($detailsChecked){
+		AppendToJSON($details, "customer.details");
 	}
 ?>
 
@@ -128,7 +109,7 @@
 							<div class="form-group">
 								<label for="surname" class="col-sm-4">Last Name:</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="surname" id="surname" placeholder="Last Name">
+									<input type="text" class="form-control" name="surname" id="surname" placeholder="Last Name" value="<?=?>">
 								</div>
 							</div>
 							<div class="form-group">
@@ -147,21 +128,6 @@
 								<label for="contactNumber" class="col-sm-4">Contact Number:</label>
 								<div class="col-sm-8">
 									<input type="tel" class="form-control" name="contactNumber" id="contactNumber" placeholder="Contact Number">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4">Card Type:</label>
-								<div class="col-sm-8">
-									<label for="cardType0" class="radio-inline">
-										<input type="radio" name="cardType" id="cardType0" value="mc">MasterCard
-									</label>
-									<label for="cardType1" class="radio-inline">
-										<input type="radio" name="cardType" id="cardType1" value="v">Visa
-									</label>
-									<label for="cardType2" class="radio-inline">
-										<input type="radio" name="cardType" id="cardType2" value="a">AMEX
-									</label>
 								</div>
 							</div>
 
@@ -199,7 +165,7 @@
 
 					<p>Order successfully placed for <?=$details["firstname"]." ".$details["surname"]?>.</p>
 					<p>Delivery to <?=$details["address"]?></p>
-					<p>Card: <?=$details["cardNumber"]?> charged $<?=$_SESSION["costTotal"]?> </p>
+					<p>Card: <?=$details["cardType"]?> <?=$details["cardNumber"]?> charged $<?=$_SESSION["costTotal"]?> </p>
 				<?php endif ?>
 			</div>
 		</div>

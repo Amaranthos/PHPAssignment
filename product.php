@@ -27,18 +27,22 @@
 		$comment =  htmlspecialchars(strip_tags(trim($comment)));
 	}
 
+	$write = array('email' => $email, 'comment' => $comment);
+	
 	if(isset($email) && isset($comment)){
-		$str = @file_get_contents($filename);
-		$write = array('email' => $email, 'comment' => $comment);
+		
+		AppendToJSON($write, $filename);
 
-		if($str !== "" && $str !== false){
-			$contents = json_decode($str, true);
-			$contents[] = $write;
-			file_put_contents($filename, json_encode($contents));
-		}
-		else {
-			file_put_contents($filename, json_encode([$write]));
-		}
+		// $str = @file_get_contents($filename);
+
+		// if($str !== "" && $str !== false){
+		// 	$contents = json_decode($str, true);
+		// 	$contents[] = $write;
+		// 	file_put_contents($filename, json_encode($contents));
+		// }
+		// else {
+		// 	file_put_contents($filename, json_encode([$write]));
+		// }
 	}
 ?>
 

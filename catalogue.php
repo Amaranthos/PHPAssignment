@@ -18,11 +18,6 @@
 		require_once "sql.php";
 	}
 
-	// Query SQL functions
-	// function Query($conn, $query) {
-		
-	// }
-
 	// Validate data functions
 	function RemoveExtraChars($string) {
 		return str_replace(" ", "", str_replace("-", "", htmlspecialchars(stripslashes(trim($string)))));
@@ -36,12 +31,52 @@
 		return(filter_var($number, FILTER_VALIDATE_INT));
 	}
 
+	function ValidateCard($cardNumber){
+		$format = array(
+			'visa' => "(4\d{12}(?:\d{3})?)",
+			'amex' => "(3[47]\d{13})",
+			'master' => "(5[1-5]\d{14})"
+		);
+		$names = array("Visa", "Amercian Express","Mastercard");
+		$matches = array();
+		$pattern = "#^(?:".implode(("|"), $format).")$#";
+		$result = preg_match($pattern, str_replace(" ", "", $cardNumber), $matches);
+
+		if($result > 0){
+			$result = (LuhnCheckSum($cardNumber))?1:0;
+		}
+		return ($result>0)?$names[sizeof($matches)-2]:false;
+	}
+
+
 	function LuhnCheckSum($number){
 		$checksum = "";
 		foreach (str_split(strrev((string)$number)) as $i => $value) {
 			$checksum .= $i %2 !== 0? $value * 2 : $value;
 		}
 		return array_sum(str_split($checksum)) % 10 === 0;
+	}
+
+	function AppendToJSON($array, $filename){
+		$str = @file_get_contents($filename);
+
+		if($str !== "" && $str !== false){
+			$contents = json_decode($str, true);
+			$contents[] = $array;
+			file_put_contents($filename, json_encode($contents));
+		}
+		else {
+			file_put_contents($filename, json_encode([$array]));
+		}
+	}
+
+	function SavedCheckoutField($field){
+		if($_POST[$field]){
+
+		}
+		elseif ($_COOKIES[$field]) {
+			# code...
+		}
 	}
 
 	//Old Catalouge
