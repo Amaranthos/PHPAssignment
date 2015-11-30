@@ -13,8 +13,7 @@
 		$product = $result->fetch_assoc();
 	}
 
-	// Add comments if entered
-
+	// Display any reviews
 	$filename = "reviews/reviews_".$productIndex.".reviews";
 	if(isset($_POST["email"])){
 		$email = $_POST["email"];
@@ -24,7 +23,7 @@
 		$comment =  htmlspecialchars(strip_tags(trim($comment)));
 	}
 
-	
+	// Save a new review	
 	if(isset($email) && isset($comment)){
 		$write = array('email' => $email, 'comment' => $comment);		
 		AppendToJSON($write, $filename);
@@ -48,7 +47,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="content">
-							<img src="<?=$product["image"]?>" class="img-responsive">
+							<img src="<?=$product["image"]?>" class="img-responsive" alt="Product Image">
 						</div>
 					</div>
 				</div>
@@ -92,7 +91,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="content">
-							<form action="" method="POST">
+							<form action="#" method="POST">
 								<div class="form-group">
 									<label for="email">Email address</label>
 									<input type="email" class="form-control" name="email" placeholder="example@email.com">

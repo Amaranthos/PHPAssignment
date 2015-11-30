@@ -15,8 +15,9 @@
 		<div class="container" style="padding-top: 78px;">
 			<div class="jumbotron">
 				<div class="row">
-					<h1>Buy some video games!</h1>
-					<br/>
+					<div class="col-xs-12">
+						<h2>Buy some Steam video game keys! Because they are cheaper than on Steam...</h2>
+					</div>
 				</div>
 				<div class="row">
 					<?php
@@ -31,7 +32,7 @@
 
 						if($result->num_rows > 0):
 							while($row = $result->fetch_assoc()):?>
-								<div class="col-xs-6 col-md-3">
+								<div class="col-xs-6 col-md-3" style="padding-top: 30px">
 									<div class="thumbnail">
 										<a href="product.php?product=<?=$row["id"]?>">
 											<img src="<?=$row["thumbnail"]?>" class="img-responsive" style="max-height: 240px;" alt="<?=$value->name?>">

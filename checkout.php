@@ -1,8 +1,4 @@
 <?php
-	if(!isset($_SESSION["costTotal"])){
-		header("index.php");
-	}
-
 	require_once "catalogue.php";
 
 	$detailsChecked = true;
@@ -11,6 +7,7 @@
 	$params = ["firstname", "surname", "email", "address", "contactNumber", "cardNumber", "cardExpiry"];
 	$details = array();
 
+	// Check all fields are populated
 	foreach ($params as $param) {
 		if(isset($_POST[$param]) && $_POST[$param] != ""){
 			$details[$param] = $_POST[$param];
@@ -94,7 +91,7 @@
 				<?php if(!$detailsChecked):?>
 				<div class="row">
 					<div class="col-md-6">
-						<form class="form-horizontal" method="post" action="">
+						<form class="form-horizontal" method="post" action="#">
 							<div class="form-group">
 								<label for="firstname" class="col-sm-4">First Name:</label>
 								<div class="col-sm-8">
@@ -161,7 +158,6 @@
 					</div>
 				</div>
 				<?php else: ?>
-
 					<p>Order successfully placed for <?=$details["firstname"]." ".$details["surname"]?>.</p>
 					<p>Delivery to <?=$details["address"]?></p>
 					<p>Card: <?=$details["cardType"]?> <?=$details["cardNumber"]?> charged $<?=$_SESSION["costTotal"]?> </p>

@@ -57,6 +57,7 @@
 		return array_sum(str_split($checksum)) % 10 === 0;
 	}
 
+	// Append array to a json file
 	function AppendToJSON($array, $filename){
 		$str = @file_get_contents($filename);
 
@@ -70,6 +71,7 @@
 		}
 	}
 
+	// Grab user data to prepopulate checkout fields
 	function SavedCheckoutField($field){
 		if(isset($_POST[$field]) && $_POST[$field] != ""){
 			return $_POST[$field];
@@ -79,8 +81,6 @@
 		}
 		else return false;
 	}
-
-	var_dump($_SESSION["checkoutVisit"]);
 
 	class Cart {
 		public $id;
