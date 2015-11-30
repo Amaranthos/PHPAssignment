@@ -1,11 +1,7 @@
 <?php
 	require_once "catalogue.php";
 
-	//Reset visiting checkout
-	if(!isset($_SESSION["checkoutVisit"])){
-		$_SESSION["checkoutVisit"] = false;
-	}
-
+	$_SESSION["checkoutVisit"] = false;
 ?>
 
 <!DOCTYPE html>

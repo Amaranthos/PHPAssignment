@@ -1,10 +1,7 @@
 <?php
 	require_once "catalogue.php";
 
-	//Reset visiting checkout
-	if(!isset($_SESSION["checkoutVisit"])){
-		$_SESSION["checkoutVisit"] = false;
-	}
+	$_SESSION["checkoutVisit"] = false;
 
 	// Get product info
 	$productIndex = isset($_GET["product"])?(int)$_GET["product"]:null;
@@ -27,22 +24,10 @@
 		$comment =  htmlspecialchars(strip_tags(trim($comment)));
 	}
 
-	$write = array('email' => $email, 'comment' => $comment);
 	
 	if(isset($email) && isset($comment)){
-		
+		$write = array('email' => $email, 'comment' => $comment);		
 		AppendToJSON($write, $filename);
-
-		// $str = @file_get_contents($filename);
-
-		// if($str !== "" && $str !== false){
-		// 	$contents = json_decode($str, true);
-		// 	$contents[] = $write;
-		// 	file_put_contents($filename, json_encode($contents));
-		// }
-		// else {
-		// 	file_put_contents($filename, json_encode([$write]));
-		// }
 	}
 ?>
 

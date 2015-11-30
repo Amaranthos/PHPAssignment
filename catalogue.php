@@ -71,22 +71,16 @@
 	}
 
 	function SavedCheckoutField($field){
-		if($_POST[$field]){
-
+		if(isset($_POST[$field]) && $_POST[$field] != ""){
+			return $_POST[$field];
 		}
-		elseif ($_COOKIES[$field]) {
-			# code...
+		elseif (isset($_COOKIES[$field]) && $_COOKIES[$field] != "") {
+			return $_COOKIES[$field];
 		}
+		else return false;
 	}
 
-	//Old Catalouge
-	class Category{
-		public $name;
-
-		public function __construct($name){
-			$this->name = $name;
-		}
-	}
+	var_dump($_SESSION["checkoutVisit"]);
 
 	class Cart {
 		public $id;
@@ -99,11 +93,3 @@
 			$this->quantity = $quantity;
 		}
 	}
-
-	$categories["action"] = new Category("Action");
-	$categories["adventure"] = new Category("Adventure");
-	$categories["casual"] = new Category("Casual");
-	$categories["puzzle"] = new Category("Puzzle");
-	$categories["strategy"] = new Category("Strategy");
-
-	

@@ -1,10 +1,8 @@
 <?php
 	require_once "catalogue.php";
 
-	//Reset visiting checkout
-	if(!isset($_SESSION["checkoutVisit"])){
-		$_SESSION["checkoutVisit"] = false;
-	}
+	$_SESSION["checkoutVisit"] = false;
+
 
 	// Product added to cart
 	if(isset($_POST["product"]) && $_POST["product"] != ""){
