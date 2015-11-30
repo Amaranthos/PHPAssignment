@@ -76,6 +76,7 @@
 	// Save customer details
 	if($detailsChecked){
 		AppendToJSON($details, "customer.details");
+		unset($_SESSION["cart"]);
 	}
 ?>
 
