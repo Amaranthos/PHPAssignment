@@ -25,16 +25,18 @@
 	}
 	// Cart updated
 	else if(isset($_SESSION["cart"])){
-		for($i = 1; $i < count($_SESSION["cart"]) + 1; $i++){
-			if(isset($_SESSION["cart"][$i])){
-				if(isset($_POST["quantity"])){
-					$_SESSION["cart"][$i]->quantity = (int)$_POST["quantity"][$i];
+		foreach ($_SESSION["cart"] as $key => $value) {
+			if(isset($_POST["quantity"])){
+				$value->quantity = (int)$_POST['quantity'][$key];
 
-					if((int)$_POST["quantity"][$i] <= 0 || $_SESSION["cart"][$i]->quantity <= 0){
-						unset($_SESSION["cart"][$i]);
-					}
+				if((int)$_POST["quantity"][$key] <= 0|| $value->quantity <= 0){
+					unset($_SESSION["cart"][$key]);
 				}
 			}
+		}
+
+		if(count($_SESSION["cart"]) <= 0){
+			unset($_SESSION["cart"]);
 		}
 	}
 ?>
@@ -87,7 +89,7 @@
 														<label class="h4"><?=$value->product["name"]?></label>													
 													</td>
 													<td>
-														<input type="number" style="color: black;" min="0" max="100" name="quantity[<?=$key?>]" value="<?=$value->quantity?>">
+														<input type="number" style="color: black;" min="0" max="1000" name="quantity[<?=$key?>]" value="<?=$value->quantity?>">
 													</td>
 													<td>
 														<label class="h4">$<?=$value->product["price"]?></label>

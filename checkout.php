@@ -1,10 +1,16 @@
 <?php
 	require_once "catalogue.php";
 
+	if(!isset($_SESSION["cart"])){
+		header("location: index.php");
+		die();
+	}
+
+
 	$detailsChecked = true;
 	$error = array();
 
-	$params = ["firstname", "surname", "email", "address", "contactNumber", "cardNumber", "cardExpiry"];
+	$params = ["firstname", "surname", "email", "address", "contactNumber", "cardNumber", "cardExpiry", "giftWrapped"];
 	$details = array();
 
 	// Check all fields are populated
@@ -14,8 +20,10 @@
 			setcookie($param, $_POST[$param], time()+60*60*24*30);
 		}
 		else {
-			$detailsChecked = false;
-			$error[$param] = "Required field";
+			if($param != "giftWrapped"){
+				$detailsChecked = false;
+				$error[$param] = "Required field";
+			}
 		}
 	}
 
@@ -32,13 +40,6 @@
 	// Validate phone number
 	if(isset($details["contactNumber"])){
 		$details["contactNumber"] = RemoveExtraChars($details["contactNumber"]);
-
-		$details["contactNumber"] = (int)$details["contactNumber"];
-
-		if(!ValidateNumbers($details["contactNumber"])){
-			$error["contactNumber"] = "Contact number is not valid, valid contact numbers should contain only numerals.";
-			$detailsChecked = false;
-		}
 	}
 
 	// Validate credit card number
@@ -73,6 +74,10 @@
 	// Save customer details
 	if($detailsChecked){
 		AppendToJSON($details, "customer.details");
+		
+		if(isset($_SESSION["cart"])){
+			$_SESSION["oldCart"] = $_SESSION["cart"];
+		}
 		unset($_SESSION["cart"]);
 	}
 ?>
@@ -145,7 +150,7 @@
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-8">
 									<div class="checkbox">
-										<label><input type="checkbox" name="giftWrapped">Gift Wrapped</label>
+										<label><input type="checkbox" name="giftWrapped" <?php if(SavedCheckoutField("giftWrapped")) {echo "checked";}?>>Gift Wrapped</label>
 									</div>
 								</div>
 							</div>
@@ -160,7 +165,52 @@
 				<?php else: ?>
 					<p>Order successfully placed for <?=$details["firstname"]." ".$details["surname"]?>.</p>
 					<p>Delivery to <?=$details["address"]?></p>
-					<p>Card: <?=$details["cardType"]?> <?=$details["cardNumber"]?> charged $<?=$_SESSION["costTotal"]?> </p>
+					<p>Card: <?=$details["cardType"]?> <?=$details["cardNumber"]?> charged <span class="blue">$<?=$_SESSION["costTotal"]?></span></p>
+					<div class="row-fluid">
+							<!-- <div class="content"> -->
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Item</th>
+												<th>Name</th>
+												<th>Quantity</th>
+												<th>Price</th>
+												<th>Subtotal</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												$total = 0;
+												foreach ($_SESSION["oldCart"] as $key => $value): 
+													$subtotal = $value->product["price"] * $value->quantity;
+													$total += $subtotal;
+											?>
+													<tr>
+													<td>
+														<img src="<?=$value->product["thumbnail"]?>" width="80" height="80" class="img-responsive img-thumbnail" alt="Product Image">
+													</td>
+													<td>
+														<label class="h4"><?=$value->product["name"]?></label>													
+													</td>
+													<td>
+														<label class="h4"><?=$value->quantity?></label>
+													</td>
+													<td>
+														<label class="h4">$<?=$value->product["price"]?></label>
+													</td>
+													<td>
+														<label class="h4 blue">$<?=$subtotal?></label>
+													</td>
+													</tr>
+												<?php 
+													endforeach;													
+												?>
+										</tbody>
+									</table>
+								</div>
+							<!-- </div> -->
+						</div>
 				<?php endif ?>
 			</div>
 		</div>
